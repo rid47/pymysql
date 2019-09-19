@@ -10,10 +10,9 @@ VALUES ('%s','%s','%d','%c','%d')"%\
 try:
 	cursor.execute(sql)
 	db.commit()
-except:
-	print("rolling back`")
-	db.rollback()
-
-
+except pymysql.InternalError as error:
+    code, message = error.args
+    print(">>>>>>>>>>>>>", code, message)
+    db.rollback()
 
 db.close()
